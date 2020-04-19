@@ -1,21 +1,21 @@
-FROM python:3.6
+FROM python:3.8.0-alpine
 
-# The enviroment variable ensures that the python output is set straight
-# to the terminal with out buffering it first
+WORKDIR /usr/src/recetapp
+
+ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-MAINTAINER Iván Kuzel
+RUN apk update \
+    && apk add postgresql-dev gcc python3-dev musl-dev
 
-# create root directory for our project in the container
-RUN mkdir /code
-
-# Set the working directory to /code
-WORKDIR /code
-
-COPY requirements.txt /code/
-
-# Copy the current directory contents into the container at /code
-ADD . /code/
-
-# Install any needed packages specified in requirements.txt
+RUN pip install --upgrade pip
+COPY ./requirements.txt /usr/src/recetapp/requirements.txt
 RUN pip install -r requirements.txt
+
+# copy entrypoint.sh
+COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
+
+COPY . /usr/src/recetapp/
+
+# run entrypoint.sh
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
