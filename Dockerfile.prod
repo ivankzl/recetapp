@@ -67,4 +67,4 @@ RUN chown -R recetapp:recetapp $APP_HOME
 USER recetapp
 
 # run entrypoint.prod.sh
-ENTRYPOINT ["/home/recetapp/web/entrypoint.prod.sh"]
+# ENTRYPOINT ["/home/recetapp/web/entrypoint.prod.sh"]

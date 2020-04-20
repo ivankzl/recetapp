@@ -1,14 +1,19 @@
-#!/bin/sh
+#!/bin/bash
+python manage.py migrate                  # Apply database migrations
+python manage.py collectstatic --noinput  # Collect static files
 
-if [ "$DATABASE" = "postgres" ]
-then
-    echo "Waiting for postgres..."
+# Prepare log files and start outputting logs to stdout
+touch /srv/logs/gunicorn.log
+touch /srv/logs/access.log
+tail -n 0 -f /srv/logs/*.log &
 
-    while ! nc -z $SQL_HOST $SQL_PORT; do
-      sleep 0.1
-    done
-
-    echo "PostgreSQL started"
-fi
-
-exec "$@"
+# Start Gunicorn processes
+echo Starting Gunicorn.
+exec gunicorn recetapp.wsgi:application \
+    --name recetapp \
+    --bind 0.0.0.0:8000 \
+    --workers 3 \
+    --log-level=info \
+    --log-file=/srv/logs/gunicorn.log \
+    --access-logfile=/srv/logs/access.log \
+    "$@"
