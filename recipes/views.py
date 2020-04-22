@@ -1,5 +1,9 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
+from .models import Recipe
 
 def index(request):
-    return HttpResponse("Hello world")
+    context = {
+        'recipes': Recipe.objects.all(),
+    }
+    return render(request, 'recipes/index.html', context)

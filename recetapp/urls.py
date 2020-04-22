@@ -6,8 +6,7 @@ from django.conf.urls.static import static
 from upload.views import image_upload
 
 urlpatterns = [
-    path("", image_upload, name="upload"),
-    # path('', include('recipes.urls')),
+    path('', include('recipes.urls')),
     path('admin/', admin.site.urls),
     path('tinymce/', include('tinymce.urls'))
 ]
