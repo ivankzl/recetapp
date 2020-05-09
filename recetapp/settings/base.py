@@ -42,9 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'recipes.apps.RecipesConfig',
     'tinymce',
-    'pages',
     'upload',
-    'bootstrap4',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

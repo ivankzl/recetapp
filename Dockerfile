@@ -9,6 +9,9 @@ RUN apk update \
     && apk add postgresql-dev gcc python3-dev musl-dev
 
 RUN pip install --upgrade pip
+
+RUN apk add zlib libjpeg-turbo-dev libpng-dev freetype-dev lcms2-dev libwebp-dev harfbuzz-dev fribidi-dev tcl-dev tk-dev
+
 COPY ./requirements.txt /usr/src/recetapp/requirements.txt
 RUN pip install -r requirements.txt
 

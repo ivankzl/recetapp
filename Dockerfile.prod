@@ -21,6 +21,8 @@ RUN pip install flake8
 COPY . /usr/src/recetapp/
 # RUN flake8 --ignore=E501,F401 .
 
+RUN apk add zlib libjpeg-turbo-dev libpng-dev freetype-dev lcms2-dev libwebp-dev harfbuzz-dev fribidi-dev tcl-dev tk-dev
+
 # install dependencies
 COPY ./requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/recetapp/wheels -r requirements.txt

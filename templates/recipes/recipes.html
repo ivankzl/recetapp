@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <header>
+    <a href="index.html"><img src="{% static 'recipes/images/logo.png' %}" width="300">
+  </header>
+  <section>
+    <div class="row">
+      <div class="col-md-8">
+       {% for recipe in recipes %}
+          <article class="blog-post">
+            <div class="blog-post-image">
+              <a href="post.html"><img src="{{ recipe.cover_picture.url }}"></a>
+            </div>
+            <div class="blog-post-body">
+              <h2><a href="post.html">{{recipe.title}}</a></h2>
+              <div class="post-meta"><span><i class="far fa-clock"></i>{{recipe.created_at}}<i class="fa fa-comment-o"></i></span></div>
+              {% comment %} <p>{{recipe.description}}</p> {% endcomment %}
+              <div class="read-more"><a href="#">Ver receta</a></div>
+            </div>
+          </article>
+        {% endfor %}
+
+        {% if recipes.has_other_pages %}
+          <nav aria-label="">
+            <ul class="pagination pagination-sm justify-content-left">
+              {% if recipes.has_previous %}
+                  <li class="page-item"><a class="page-link" href="?page={{ recipes.previous_page_number }}">&laquo;</a></li>
+              {% else %}
+                  <li class="page-item disabled"><a class="page-link" href="#"><span>&laquo;</span></a></li>
+              {% endif %}
+              {% for i in recipes.paginator.page_range %}
+                  {% if recipes.number == i %}
+                      <li class="page-item active"><a class="page-link" href="#">{{ i }} <span class="sr-only">(current)</span></a></li>
+                  {% else %}
+                      <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                  {% endif %}
+              {% endfor %}
+              {% if recipes.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{ recipes.next_page_number }}">&raquo;</a></li>
+              {% else %}
+                  <li class="page-item disabled"><a class="page-link" href="#"><span>&raquo;</span></a></li>
+              {% endif %}
+            </ul>
+          </nav>
+        {% endif %}
+      </div>
+      <div class="col-md-4 sidebar-gutter">
+        <aside>
+        <!-- sidebar-widget -->
+        <div class="sidebar-widget">
+          <h3 class="sidebar-title">Categorías</h3>
+          <div class="widget-container">
+            <ul>
+              <li><a href="#">Dulces</a></li>
+              <li><a href="#">Saladas</a></li>
+              <li><a href="#">Pastas</a></li>
+              <li><a href="#">Merienda</a></li>
+            </ul>
+          </div>
+        </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
