@@ -73,7 +73,7 @@ section:last-child {
 	color:#fff;
 }
 header {
-	margin: 15px 0 65px;
+	margin: 25px 0 25px;
 	text-align: center;
 }
 /*- BX Slaider reset -*/
@@ -146,7 +146,7 @@ header {
 }
 .blog-post .blog-post-body {
 	text-align: center;
-	padding: 20px 0;
+	padding: 0px 0;
 }
 .blog-post .blog-post-body h2 {
 	margin: 0;

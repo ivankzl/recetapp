@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-  <header>
-    <a href="index.html"><img src="{% static 'recipes/images/logo.png' %}" width="300">
-  </header>
   <section>
     <div class="row">
       <div class="col-md-8">
@@ -14,11 +11,13 @@
             </div>
             <div class="blog-post-body">
               <h2><a href="{% url 'recipes:recipe-detail' recipe.slug %}">{{recipe.title}}</a></h2>
-              <div class="post-meta"><span><i class="far fa-clock"></i>{{recipe.created_at}}<i class="fa fa-comment-o"></i></span></div>
-              {% comment %} <p>{{recipe.description}}</p> {% endcomment %}
-              {% comment %} <div class="read-more"><a href="#">Ver receta</a></div> {% endcomment %}
+              <div class="post-meta"><span><i class="far fa-clock"></i>{{recipe.created_at| date:"D d F Y" }}<i class="fa fa-comment-o"></i></span></div>
             </div>
           </article>
+        {% empty %}
+          <div style="width:40rem">
+            No se encontraron recetas.
+          </div>
         {% endfor %}
 
         {% if recipes.has_other_pages %}
@@ -52,10 +51,9 @@
           <h3 class="sidebar-title">Categorías</h3>
           <div class="widget-container">
             <ul>
-              <li><a href="#">Dulces</a></li>
-              <li><a href="#">Saladas</a></li>
-              <li><a href="#">Pastas</a></li>
-              <li><a href="#">Merienda</a></li>
+              {% for category in categories %}
+                <li><a href="{% url 'recipes:index' %}?categoria={{category.id}}">{{category}}</a></li>
+              {% endfor %}
             </ul>
           </div>
         </div>

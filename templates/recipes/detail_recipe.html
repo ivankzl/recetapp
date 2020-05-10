@@ -4,29 +4,26 @@
 <section>
   <div class="row">
     <div class="col-md-8">
-        <article class="blog-post">
-            <div class="blog-post-image">
-                <a href="post.html"><img src="images/750x500-5.jpg" alt=""></a>
-            </div>
-            <div class="blog-post-body">
-              <h2><a href="post.html">{{recipe.title}}</a></h2>
-              <img src="{{ recipe.cover_picture.url }}">
-              <div class="post-meta"><i class="fa fa-clock-o"></i>{{recipe.created_at}}</div>
-              <div class="blog-post-text">
-                <h3>Ingredientes</h3>
-                <p>
-                  <ul>
-                  {% for ingredient in recipe.ingredients %}
-                    <li>{{ ingredient }}</li>
-                  {% endfor %}
-                  </ul>
-                </p>
-                <h3>Preparación</h3>
-                <p>{{recipe.content|safe}}</p>
-                <div class="read-more"><a href="{% url 'recipes:index' %}">Volver al Inicio</a></div>
-              </div>
-            </div>
-        </article>
+      <article class="blog-post">
+        <div class="blog-post-body">
+          <h2><a href="post.html">{{recipe.title}}</a></h2>
+          <img src="{{ recipe.cover_picture.url }}">
+          <div class="post-meta"><i class="fa fa-clock-o"></i>{{recipe.created_at}}</div>
+          <div class="blog-post-text">
+            <h3>Ingredientes</h3>
+            <p>
+              <ul>
+              {% for ingredient in recipe.ingredients %}
+                <li>{{ ingredient }}</li>
+              {% endfor %}
+              </ul>
+            </p>
+            <h3>Preparación</h3>
+            <p>{{recipe.content|safe}}</p>
+            <div class="read-more"><a href="{% url 'recipes:index' %}">Volver al Inicio</a></div>
+          </div>
+        </div>
+      </article>
     </div>
     <div class="col-md-4 sidebar-gutter mt-4">
       <aside>
