@@ -7,15 +7,15 @@ services:
       dockerfile: Dockerfile.prod
     command: gunicorn recetapp.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - static_volume:/home/recetapp/web/staticfiles
-      - media_volume:/home/recetapp/web/mediafiles
+      - static_volume:/home/recetapp/staticfiles
+      - media_volume:/home/recetapp/mediafiles
     expose:
       - 8000
   nginx:
     build: ./nginx
     volumes:
-      - static_volume:/home/recetapp/web/staticfiles
-      - media_volume:/home/recetapp/web/mediafiles
+      - static_volume:/home/recetapp/staticfiles
+      - media_volume:/home/recetapp/mediafiles
     ports:
       - 80:80
     depends_on:
