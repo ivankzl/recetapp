@@ -10,13 +10,13 @@
        {% for recipe in recipes %}
           <article class="blog-post">
             <div class="blog-post-image">
-              <a href="post.html"><img src="{{ recipe.cover_picture.url }}"></a>
+              <a href="{% url 'recipes:recipe-detail' recipe.slug %}"><img src="{{ recipe.cover_picture.url }}"></a>
             </div>
             <div class="blog-post-body">
-              <h2><a href="post.html">{{recipe.title}}</a></h2>
+              <h2><a href="{% url 'recipes:recipe-detail' recipe.slug %}">{{recipe.title}}</a></h2>
               <div class="post-meta"><span><i class="far fa-clock"></i>{{recipe.created_at}}<i class="fa fa-comment-o"></i></span></div>
               {% comment %} <p>{{recipe.description}}</p> {% endcomment %}
-              <div class="read-more"><a href="#">Ver receta</a></div>
+              {% comment %} <div class="read-more"><a href="#">Ver receta</a></div> {% endcomment %}
             </div>
           </article>
         {% endfor %}

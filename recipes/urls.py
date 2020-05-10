@@ -1,10 +1,16 @@
-from django.urls import path
+from django.conf.urls import include, url
+from .views import (index, RecipeListView, RecipeDetailView)
 
 from . import views
 
 app_name = 'recipes'
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('recetas/', views.recipes, name='recipes'),
+    url(r'^$',
+        RecipeListView.as_view(),
+        name='index'),
+
+    url(r'^recetas/(?P<slug>[-\w]+)/$',
+        RecipeDetailView.as_view(),
+        name='recipe-detail'),
 ]

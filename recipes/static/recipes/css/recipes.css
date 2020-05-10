@@ -216,8 +216,8 @@ header {
 	transition: all 0.2s ease-out;
 }
 .blog-post .read-more a:hover {
-	background-color: #fed136;
-	border-color: #fed136;
+	background-color: #4b4b4b;
+	border-color: #414141;
 	color: #fff;
 }
 .blog-post .blog-post-text {

@@ -1,24 +1,28 @@
 from django.shortcuts import render
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from braces.views import StaticContextMixin
+
 from .models import Recipe
 
 def index(request):
   return render(request, 'recipes/index.html')
 
-def recipes(request):
-  recipe_list = Recipe.objects.order_by('-created_at')
-  page = request.GET.get('page', 1)
+class RecipeListView(StaticContextMixin, ListView): 
+  template_name = 'recipes/recipes.html'
+  context_object_name = 'recipes'
+  static_context = {'title': ('Recetas')}
 
-  paginator = Paginator(recipe_list, 2)
+  def get_queryset(self):
+    queryset = Recipe.objects.order_by('-created_at')
 
-  try:
-    recipes = paginator.page(page)
-  except PageNotAnInteger:
-      recipes = paginator.page(1)
-  except EmptyPage:
-      recipes = paginator.page(paginator.num_pages)
+    return queryset
 
-  context = {
-    'recipes': recipes,
-  }
-  return render(request, 'recipes/recipes.html', context)
+
+class RecipeDetailView(StaticContextMixin, DetailView):
+
+    context_object_name = 'recipe'
+    template_name = 'recipes/detail_recipe.html'
+    model = Recipe
+    static_context = {'title': ('Receta - Detalle')}
