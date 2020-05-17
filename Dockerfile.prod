@@ -1,27 +1,21 @@
-# BUILDER #
-###########
-
-# pull official base image
 FROM python:3.8.0-alpine as builder
 
-# set work directory
 WORKDIR /usr/src/recetapp
 
-# set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# install psycopg2 dependencies
 RUN apk update \
     && apk add postgresql-dev gcc python3-dev musl-dev
 
-# lint
+RUN apk add --no-cache jpeg-dev zlib-dev
+RUN apk add --no-cache --virtual .build-deps build-base linux-headers \
+    && pip install Pillow
+
 RUN pip install --upgrade pip
 RUN pip install flake8
 COPY . /usr/src/recetapp/
 # RUN flake8 --ignore=E501,F401 .
-
-RUN apk add zlib libjpeg-turbo-dev libpng-dev freetype-dev lcms2-dev libwebp-dev harfbuzz-dev fribidi-dev tcl-dev tk-dev
 
 # install dependencies
 COPY ./requirements.txt .
@@ -51,6 +45,9 @@ WORKDIR $APP_HOME
 
 # install dependencies
 RUN apk update && apk add libpq
+RUN apk add --no-cache jpeg-dev zlib-dev
+RUN apk add --no-cache --virtual .build-deps build-base linux-headers \
+    && pip install Pillow
 COPY --from=builder /usr/src/recetapp/wheels /wheels
 COPY --from=builder /usr/src/recetapp/requirements.txt .
 RUN pip install --upgrade pip
@@ -69,4 +66,4 @@ RUN chown -R recetapp:recetapp $APP_HOME
 USER recetapp
 
 # run entrypoint.prod.sh
-# ENTRYPOINT ["/home/recetapp/web/entrypoint.prod.sh"]
+ENTRYPOINT ["/home/recetapp/web/entrypoint.prod.sh"]
